@@ -13,18 +13,11 @@ public class LoginPage {
         this.driver = driver;
     }
 
-    @FindBy(name = "email")
-    private WebElement emailField;
-
-    @FindBy(name = "password")
-    private WebElement passwordField;
-
     @FindBy(linkText = "Подборки произведений")
     private WebElement btn1;
 
     @FindBy(css = ".avatar")
     private WebElement btn2;
-
 
     public void btn1In (){
         btn1.click();
@@ -34,11 +27,4 @@ public class LoginPage {
         btn2.click();
     }
 
-    public void logoIn(String login) {
-        emailField.sendKeys(login);
-    }
-
-    public void passwdIn(String password) {
-        emailField.sendKeys(password);
-    }
 }

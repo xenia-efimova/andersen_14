@@ -10,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.time.Duration;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.WebDriver;
+import java.util.concurrent.TimeUnit;
 
 
 public class TestOne {
@@ -21,14 +22,10 @@ public class TestOne {
         System.setProperty("webdriver.chrome.driver", "src\\test\\resources\\chromedriver.exe");
         driver = new ChromeDriver();
         loginPage = new LoginPage(driver);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        driver.manage().timeouts().pageLoadTimeout(80, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get(ConfProperties.getProperty("loginpage"));
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        driver.quit();
     }
 
     @Test
@@ -41,8 +38,13 @@ public class TestOne {
             builder.moveToElement(element).perform();
         }
         driver.findElement(By.cssSelector(".brand-logo-img")).click();
-        loginPage.btn2In();
+        loginPage.btn1In();
         driver.findElement(By.cssSelector(".collection:nth-child(2) > .collection-title")).click();
         Assertions.assertEquals(driver.findElement(By.linkText("Апокалипсис. Постапокалипсис. Выживание")).getText(),"Апокалипсис. Постапокалипсис. Выживание");
+    }
+
+    @AfterClass
+    public void tearDown() {
+        driver.quit();
     }
 }
